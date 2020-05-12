@@ -69,8 +69,10 @@ class anima:
             self.functions = funcs
         elif type(funcs) == dict:
             self.functions = [funcs]
+            funcs = self.functions
         elif type(funcs) == type(lambda : 0):
             self.functions = [{'func':funcs, 'subplt':111}]
+            funcs = self.functions
         self.set_funcparameters(funcs)
     
     def set_funcparameters(self, funcs):
@@ -81,7 +83,8 @@ class anima:
         '''
         default_params = {'xs' : self.x_values,
                           'c' : 'auto',
-                          'lw' : 'auto'}
+                          'lw' : 'auto',
+                          'marker' : ' '}
         
         # Fill undefined parameters with defaults
         for func in self.functions:
@@ -167,7 +170,7 @@ class anima:
             xmax[subplt].append(max(xs))
             ymin[subplt].append(min(ys))
             ymax[subplt].append(max(ys))
-    
+        
         # Choose extreme value of all functions in subplot as axis limits
         for subplt in PlotHome:
             minx, maxx = min(xmin[subplt]), max(xmax[subplt])
@@ -176,7 +179,7 @@ class anima:
             if subplt in self.parameters['axlimits']:
                 axlimits = self.parameters['axlimits'][subplt]
                 if not axlimits[0] is None:
-                    PlotHome[subplt].set_ylim(axlimits[0])
+                    PlotHome[subplt].set_xlim(axlimits[0])
                 else:
                     PlotHome[subplt].set_xlim([minx, maxx])
                 if not axlimits[1] is None:
